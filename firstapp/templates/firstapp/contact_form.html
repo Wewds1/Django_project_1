@@ -1,0 +1,29 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+<section class="hero">
+    <h1>Add Contact</h1>
+    <p>Fill in a basic customer record and save it into the database.</p>
+</section>
+
+<div class="toolbar">
+    <a class="backlink" href="{% url 'contact_list' %}">Back to contacts</a>
+</div>
+
+<section class="panel">
+    <form method="post" class="form-grid">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="field">
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <div>
+            <button class="button" type="submit">Save Contact</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

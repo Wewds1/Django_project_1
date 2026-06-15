@@ -1,0 +1,46 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+<section class="hero">
+    <h1>Simple CRM</h1>
+    <p>A lightweight practice app for learning how Django models, forms, views, and templates work together.</p>
+</section>
+
+<div class="toolbar">
+    <div>
+        <strong>{{ contacts.count }} contact{{ contacts.count|pluralize }}</strong>
+    </div>
+    <a class="button" href="{% url 'contact_create' %}">New Contact</a>
+</div>
+
+<section class="panel">
+    {% if contacts %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.first_name }} {{ contact.last_name }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.company|default:'-' }}</td>
+                <td><span class="pill">{{ contact.get_status_display }}</span></td>
+                <td>{{ contact.notes|default:'-'|linebreaksbr }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty">
+        No contacts yet. Create the first one to see the CRM working.
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
